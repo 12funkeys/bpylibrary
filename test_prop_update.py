@@ -14,15 +14,21 @@ bl_info = {
     "category" : "TEST"
 }
 
+xx = 0
+
+
 # operatator
 class CHoge(bpy.types.Operator):
     bl_idname = "test.hoge"
     bl_label = "Hoge Menu"
     bl_description = "Hoge Piyo"
     bl_options = {'REGISTER', 'UNDO'}
+    
 
     def update_func(self, context):
         print("heyheyhey", self)
+        global xx
+        xx = 1
 
     testprops = FloatProperty(
         name = "prop",
@@ -42,7 +48,11 @@ class CHoge(bpy.types.Operator):
         layout.prop(self, 'testprops')
 
     def execute(self, context):
-        self.report({'INFO'}, "execute") 
+        
+        if xx == 1:
+            return {'FINISHED'}
+        else:
+            self.report({'INFO'}, str(xx)) 
         return {'FINISHED'}
 
 
