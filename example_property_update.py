@@ -14,6 +14,7 @@ bl_info = {
     "category" : "TEST"
 }
 
+#global
 xx = 0
 
 
@@ -25,9 +26,7 @@ class CHoge(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def update_func(self, context):
-        global xx
-        xx = 1
-        print("xx=" + str(xx), self)
+        print("update_func:xx=" + str(xx), self)
         print("testprops=" + str(self.testprops), self)
     
     testprops = FloatProperty(
@@ -37,6 +36,11 @@ class CHoge(bpy.types.Operator):
         subtype = 'NONE',
         min = 0.001,
         update= update_func )
+
+    def __init__(self):
+        global xx
+        xx = 0
+        self.testprops = 1.0  
 
     @classmethod
     def poll(cls, context):
@@ -48,11 +52,13 @@ class CHoge(bpy.types.Operator):
         layout.prop(self, 'testprops')
 
     def execute(self, context):
-        
+        global xx
         if xx == 1:
+            print("execute:through", self)
             return {'FINISHED'}
         else:
-            self.report({'INFO'}, str(xx)) 
+            xx = 1
+            print("execute:xx=" + str(xx), self)
         return {'FINISHED'}
 
 
