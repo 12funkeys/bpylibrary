@@ -23,13 +23,13 @@ class CHoge(bpy.types.Operator):
     bl_label = "Hoge Menu"
     bl_description = "Hoge Piyo"
     bl_options = {'REGISTER', 'UNDO'}
-    
 
     def update_func(self, context):
-        print("heyheyhey", self)
         global xx
         xx = 1
-
+        print("xx=" + str(xx), self)
+        print("testprops=" + str(self.testprops), self)
+    
     testprops = FloatProperty(
         name = "prop",
         description = "testprop",
